@@ -1,0 +1,13 @@
+@if (action) {
+  <div class="bg-white border-[1.5px] border-ink-200 rounded-card p-4 mt-2 shadow-sm">
+    <div class="flex items-center gap-2.5 mb-2">
+      <span class="text-sm font-bold text-ink-950 capitalize">{{ action.intent }}</span>
+      <span class="text-xs bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full">{{ action.scope }}</span>
+    </div>
+    @if (action.entity) {
+      <div class="text-base text-ink-500">
+        <span class="font-semibold text-teal-700">{{ action.entity.name || action.entity.ticker }}</span>
+      </div>
+    }
+  </div>
+}

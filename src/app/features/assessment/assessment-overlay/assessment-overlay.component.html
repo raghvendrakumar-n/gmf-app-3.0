@@ -1,0 +1,69 @@
+@if (state$ | async; as state) {
+  <div class="fixed inset-0 z-[300] bg-ink-50 flex-col overflow-hidden hidden" [class.!flex]="state.data">
+    <div class="flex items-center gap-3.5 px-6 h-[58px] bg-white border-b-[1.5px] border-ink-200 shrink-0">
+      <div class="w-[34px] h-[34px] rounded-lg border-[1.5px] border-ink-200 bg-white flex items-center justify-center cursor-pointer text-ink-500 hover:text-ink-950 hover:border-ink-300" (click)="close()">✕</div>
+      <div class="flex-1 flex flex-col gap-0.5">
+        <div class="text-xs font-bold uppercase tracking-[0.08em] text-teal-700">{{ state.data?.label }}</div>
+        <div class="text-md font-bold text-ink-950">{{ currentSection?.title }}</div>
+      </div>
+      <span class="font-mono text-sm text-ink-500">Section {{ state.sectionIdx + 1 }} of {{ state.data?.sections?.length }}</span>
+    </div>
+
+    <div class="h-[3px] bg-ink-200 shrink-0">
+      <div class="h-full bg-gradient-to-r from-gold-400 to-teal-500 transition-all duration-350" [style.width.%]="progress"></div>
+    </div>
+
+    @if (!state.complete) {
+      <div class="flex-1 overflow-y-auto pt-8 px-6 pb-6">
+        <div class="max-w-[640px] mx-auto mb-7 text-center">
+          <div class="font-serif text-3xl font-semibold text-ink-950 mb-2">{{ currentSection?.title }}</div>
+          <div class="text-base text-ink-500 leading-relaxed">{{ currentSection?.desc }}</div>
+        </div>
+
+        <div class="max-w-[720px] mx-auto flex flex-col gap-5">
+          @for (q of currentSection?.questions; track q.id; let qi = $index) {
+            <div class="bg-white border-[1.5px] border-ink-200 rounded-card overflow-hidden shadow-sm"
+                 [class.!border-teal-200]="isAnswered(q.id)">
+              <div class="px-5 py-3.5 border-b border-ink-200 bg-ink-50">
+                <div class="text-xs font-bold uppercase tracking-[0.08em] text-teal-600 mb-1.5">Question {{ qi + 1 }}</div>
+                <div class="text-base font-semibold text-ink-950 leading-relaxed">{{ q.text }}</div>
+              </div>
+              <div class="p-3 flex flex-col gap-1.5">
+                @for (opt of q.options; track opt.id) {
+                  <button class="flex items-start gap-3 px-3.5 py-3 rounded-lg border-[1.5px] border-ink-200 bg-white cursor-pointer transition-all w-full text-left font-sans hover:border-teal-200 hover:bg-teal-50"
+                          [class.!border-teal-500]="isSelected(q.id, opt.id)"
+                          [class.!bg-teal-50]="isSelected(q.id, opt.id)"
+                          [class.shadow-[0_0_0_3px_rgba(15,183,138,0.12)]]="isSelected(q.id, opt.id)"
+                          (click)="selectAnswer(q.id, opt.id)">
+                    <div class="w-[18px] h-[18px] rounded-full border-2 border-ink-300 shrink-0 mt-px flex items-center justify-center"
+                         [class.!bg-teal-600]="isSelected(q.id, opt.id)"
+                         [class.!border-teal-600]="isSelected(q.id, opt.id)">
+                      @if (isSelected(q.id, opt.id)) {
+                        <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+                      }
+                    </div>
+                    <span class="text-base text-ink-800 leading-relaxed"
+                          [class.!text-teal-800]="isSelected(q.id, opt.id)"
+                          [class.!font-semibold]="isSelected(q.id, opt.id)">{{ opt.text }}</span>
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (!state.complete) {
+      <div class="px-6 py-3.5 bg-white border-t-[1.5px] border-ink-200 flex items-center justify-between shrink-0">
+        <span class="text-xs text-ink-500">{{ allAnswered() ? 'Ready to continue' : 'Answer all questions' }}</span>
+        <div class="flex gap-2.5">
+          @if (state.sectionIdx > 0) {
+            <button class="px-5 py-2.5 rounded-md border-[1.5px] border-ink-200 bg-white text-base font-semibold text-ink-800 cursor-pointer" (click)="back()">← Back</button>
+          }
+          <button class="px-6 py-2.5 rounded-md border-none bg-gradient-to-br from-teal-500 to-teal-700 text-base font-bold text-white shadow-teal cursor-pointer disabled:opacity-40 disabled:pointer-events-none" [disabled]="!allAnswered()" (click)="next()">Continue →</button>
+        </div>
+      </div>
+    }
+  </div>
+}

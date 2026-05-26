@@ -1,0 +1,8 @@
+<div class="relative overflow-hidden bg-white border-[1.5px] border-ink-200 rounded-lg p-3.5 px-4 transition-all duration-200 hover:border-teal-200 hover:shadow-[0_4px_16px_rgba(5,150,105,0.1)] group">
+  <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-gold-400 to-teal-500 opacity-0 transition-opacity duration-250 group-hover:opacity-100"></div>
+  <div class="text-xs font-bold tracking-[0.08em] uppercase text-ink-500 mb-1.5 leading-none">{{ label }}</div>
+  <div class="font-mono text-2xl font-semibold text-ink-950 leading-none tracking-tight" [innerHTML]="value"></div>
+  @if (change) {
+    <div class="text-sm mt-1 font-semibold" [ngClass]="changeClass">{{ change }}</div>
+  }
+</div>

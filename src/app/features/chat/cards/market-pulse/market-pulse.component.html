@@ -1,0 +1,46 @@
+<div class="border-[1.5px] border-ink-200 rounded-2xl overflow-hidden bg-white shadow-sm animate-[card-in_0.22s_ease]">
+  <div class="flex items-center gap-2.5 px-4 py-3 border-b border-ink-200 bg-ink-50/50 relative">
+    <div class="absolute left-0 top-2 bottom-2 w-[3.5px] rounded-r-sm bg-gradient-to-b from-gold-400 to-teal-600"></div>
+    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-50 to-teal-100 border-[1.5px] border-teal-200 flex items-center justify-center text-sm shadow-[0_1px_4px_rgba(5,150,105,0.12)]">📊</div>
+    <div class="flex-1">
+      <div class="font-serif text-[15px] font-semibold text-ink-950 tracking-tight">Market Pulse</div>
+    </div>
+    <span class="text-[10px] text-ink-400 font-medium bg-ink-50 border border-ink-200 rounded-full px-2.5 py-0.5 uppercase tracking-widest">Apr 14, 2026</span>
+  </div>
+
+  <div class="p-4">
+    <div class="stat-grid">
+      @for (index of indices; track index.label) {
+        <div class="stat-box">
+          <div class="stat-lbl">{{ index.label }}</div>
+          <div class="stat-val">{{ index.value }}</div>
+          <div class="stat-chg" [class]="index.colorClass">{{ index.arrow }} {{ index.change }}</div>
+        </div>
+      }
+    </div>
+
+    @for (sector of sectors; track sector.name) {
+      <div class="flex items-center justify-between py-[11px] border-b border-ink-100 last:border-b-0 last:pb-0 first:pt-0.5 gap-3 transition-colors duration-100">
+        <div class="flex flex-col gap-[3px]">
+          <div class="font-mono text-[13px] font-semibold text-ink-950 tracking-[0.02em]">{{ sector.name }}</div>
+          @if (sector.subtitle) {
+            <div class="text-[11px] text-ink-500 font-normal">{{ sector.subtitle }}</div>
+          }
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="inline-flex items-center px-2.5 py-[3px] rounded-full text-[11px] font-bold tracking-[0.02em] whitespace-nowrap uppercase border"
+                [class]="sector.badgeClass">{{ sector.change }}</span>
+        </div>
+      </div>
+    }
+
+    <div class="mt-3 py-[11px] px-3.5 bg-ink-50 rounded-[10px] border-[1.5px] border-ink-200 flex items-center justify-between">
+      <span class="text-[11px] text-ink-700 font-semibold tracking-[0.3px]">VIX — Fear Index</span>
+      <div class="flex items-center gap-2.5">
+        <span class="font-mono text-[17px] font-semibold text-ink-950 tracking-tight">{{ vix.value }}</span>
+        <span class="inline-flex items-center px-2.5 py-[3px] rounded-full text-[11px] font-bold tracking-[0.02em] whitespace-nowrap uppercase border"
+              [class]="vix.badgeClass">{{ vix.label }}</span>
+      </div>
+    </div>
+  </div>
+</div>

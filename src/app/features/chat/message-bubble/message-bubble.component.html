@@ -1,0 +1,76 @@
+@if (message.type !== 'typing') {
+  <div class="flex flex-col gap-1.5" [ngClass]="{'items-end': message.type === 'user', 'items-start': message.type === 'bot'}">
+    <div class="flex items-end gap-2 max-w-[82%] min-w-0" [ngClass]="{'flex-row-reverse': message.type === 'user'}">
+      @if (message.type === 'bot') {
+        <div class="w-[30px] h-[30px] rounded-[9px] text-[15px] font-bold font-serif flex items-center justify-center shrink-0 mb-0.5 bg-gradient-to-br from-teal-600 to-teal-800 text-white shadow-teal">
+          L
+        </div>
+      }
+      @if (message.type === 'user') {
+        <div class="w-[30px] h-[30px] rounded-full text-[10px] font-bold flex items-center justify-center shrink-0 mb-0.5 bg-white border-[1.5px] border-ink-200 text-ink-500">
+          ?
+        </div>
+      }
+      <div class="py-3 px-4 rounded-2xl font-sans text-base leading-[1.65] break-words min-w-0"
+           [ngClass]="{
+             'bg-white border-[1.5px] border-ink-200 rounded-bl-sm text-ink-950 shadow-sm': message.type === 'bot',
+             'bg-gradient-to-br from-teal-600 to-teal-800 text-white/95 rounded-br-sm shadow-teal font-medium': message.type === 'user'
+           }"
+           [innerHTML]="message.text"></div>
+    </div>
+
+    <!-- Intent Card -->
+    @if (message.action && message.type === 'bot') {
+      <div class="w-full max-w-[82%] pl-[38px]">
+        @switch (message.action.intent) {
+          @case ('market_pulse') { <app-market-pulse-card></app-market-pulse-card> }
+          @case ('stock_pulse') { <app-stock-pulse-card [ticker]="message.action.entity?.ticker || ''"></app-stock-pulse-card> }
+          @case ('sector_pulse') { <app-sector-pulse-card [sector]="message.action.sector || ''"></app-sector-pulse-card> }
+          @case ('portfolio.show') { <app-portfolio-card></app-portfolio-card> }
+          @case ('watchlist.show') { <app-watchlist-card></app-watchlist-card> }
+          @case ('goals.show') { <app-goals-card></app-goals-card> }
+          @case ('goals.add') { <app-goal-add-card (goalSaved)="onChipClick($event)"></app-goal-add-card> }
+          @case ('trades.review') { <app-trade-review-chat-card></app-trade-review-chat-card> }
+          @case ('blind_spots.show') { <app-blind-spots-card></app-blind-spots-card> }
+          @case ('risk_profile.show') { <app-risk-profile-card></app-risk-profile-card> }
+          @case ('money_persona.show') { <app-money-persona-card></app-money-persona-card> }
+          @case ('agent.show') { <app-agent-settings-card></app-agent-settings-card> }
+          @case ('opportunities.show') { <app-opportunities-card></app-opportunities-card> }
+          @case ('notifications.show') { <app-notifications-card></app-notifications-card> }
+          @case ('themes.all') { <app-themes-card filter="all"></app-themes-card> }
+          @case ('themes.following') { <app-themes-card filter="following"></app-themes-card> }
+          @case ('favorites.show') { <app-favorites-card></app-favorites-card> }
+          @case ('universe.show') { <app-universe-card></app-universe-card> }
+          @case ('account.show') { <app-account-card></app-account-card> }
+          @default { }
+        }
+      </div>
+    }
+
+    <!-- Quick Chips (capsules) -->
+    @if (message.chips && message.chips.length > 0 && message.type === 'bot') {
+      <div class="flex flex-wrap gap-1.5 pl-[38px] mt-1">
+        @for (chip of message.chips; track chip.query) {
+          <button
+            class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-semibold bg-white border-[1.5px] border-ink-200 text-ink-700 hover:border-teal-300 hover:text-teal-700 hover:bg-teal-50/50 transition-all cursor-pointer shadow-sm"
+            (click)="onChipClick(chip.query)">
+            {{ chip.label }}
+          </button>
+        }
+      </div>
+    }
+
+    <div class="text-[10px] text-ink-400 px-1">{{ message.timestamp }}</div>
+  </div>
+}
+
+@if (message.type === 'typing') {
+  <div class="flex flex-col gap-1.5 items-start">
+    <div class="flex items-end gap-2 max-w-[82%] min-w-0">
+      <div class="w-[30px] h-[30px] rounded-[9px] text-[15px] font-bold font-serif flex items-center justify-center shrink-0 mb-0.5 bg-gradient-to-br from-teal-600 to-teal-800 text-white shadow-teal">
+        L
+      </div>
+      <app-typing-indicator></app-typing-indicator>
+    </div>
+  </div>
+}

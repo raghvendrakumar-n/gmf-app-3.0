@@ -1,0 +1,238 @@
+<div class="border-[1.5px] border-ink-200 rounded-2xl overflow-hidden bg-white shadow-sm animate-[card-in_0.22s_ease]">
+  <!-- Header -->
+  <div class="flex items-center gap-2.5 px-4 py-3 border-b border-ink-200 bg-ink-50/50">
+    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-100 to-teal-200 flex items-center justify-center text-sm">📈</div>
+    <div class="flex-1">
+      <div class="text-sm font-bold text-ink-950">Stock Pulse — {{ ticker }}</div>
+    </div>
+    <span class="text-[10px] text-ink-400 font-medium">Apr 14, 2026</span>
+  </div>
+
+  @if (stockData) {
+    <!-- Tabs -->
+    <div class="flex border-b border-ink-200">
+      <button
+        class="flex-1 py-2.5 text-[11px] font-semibold transition-colors"
+        [class]="activeTab === 0 ? 'text-teal-700 border-b-2 border-teal-600 bg-teal-50/40' : 'text-ink-500 hover:text-ink-700'"
+        (click)="activeTab = 0">
+        HealthScore™
+      </button>
+      <button
+        class="flex-1 py-2.5 text-[11px] font-semibold transition-colors"
+        [class]="activeTab === 1 ? 'text-teal-700 border-b-2 border-teal-600 bg-teal-50/40' : 'text-ink-500 hover:text-ink-700'"
+        (click)="activeTab = 1">
+        ReversalProb™
+      </button>
+      <button
+        class="flex-1 py-2.5 text-[11px] font-semibold transition-colors"
+        [class]="activeTab === 2 ? 'text-teal-700 border-b-2 border-teal-600 bg-teal-50/40' : 'text-ink-500 hover:text-ink-700'"
+        (click)="activeTab = 2">
+        Alpha & Sentiment
+      </button>
+    </div>
+
+    <!-- Panel 1: HealthScore -->
+    @if (activeTab === 0) {
+      <div class="p-4">
+        <!-- HealthScore gauge area -->
+        <div class="flex items-start gap-4 mb-4">
+          <!-- Score circle -->
+          <div class="relative w-[100px] h-[100px] flex items-center justify-center shrink-0">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#f1f5f9" stroke-width="8"/>
+              <circle cx="50" cy="50" r="42" fill="none" [attr.stroke]="activeZone.col" stroke-width="8"
+                stroke-linecap="round"
+                [attr.stroke-dasharray]="(stockData.hs / 100 * 264) + ' 264'"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span class="text-2xl font-bold" [style.color]="activeZone.col">{{ stockData.hs }}</span>
+              <span class="text-[9px] text-ink-400">/100</span>
+            </div>
+          </div>
+          <!-- Details -->
+          <div class="flex-1 pt-1">
+            <div class="text-[10px] text-ink-500 font-semibold tracking-wide uppercase mb-1">HealthScore™</div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold mb-2"
+              [style.background]="activeZone.bg" [style.color]="activeZone.text">
+              <span class="w-2 h-2 rounded-full inline-block" [style.background]="activeZone.col"></span>
+              {{ activeZone.label }}
+            </div>
+            <div class="text-xs text-ink-500">Score: <strong [style.color]="activeZone.col">{{ stockData.hs }}</strong> / 100</div>
+            <!-- Zone legend -->
+            <div class="mt-2 space-y-1">
+              @for (z of zones; track z.label; let i = $index) {
+                <div class="flex items-center gap-1.5 text-[10px]" [class.font-bold]="i === activeZoneIdx">
+                  <span class="w-2 h-2 rounded-full inline-block" [style.background]="z.col" [style.opacity]="i === activeZoneIdx ? 1 : 0.3"></span>
+                  <span class="text-ink-700">{{ z.label }}</span>
+                  <span class="text-ink-400 ml-1">{{ z.range }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Meta stats -->
+        <div class="grid grid-cols-3 gap-2 mb-2">
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Market Cap</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.cap }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Sector</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.sector }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Industry</div>
+            <div class="text-[11px] font-bold text-ink-950 text-center">{{ stockData.industry }}</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mb-4">
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Index</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.index }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Avg Volume</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.volRange }}</div>
+          </div>
+        </div>
+
+        <!-- Signal Summary -->
+        <div class="text-[10px] text-ink-500 font-semibold uppercase tracking-wider mb-2">Signal Summary</div>
+        <div class="grid grid-cols-3 gap-2 mb-2">
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">HS Zone</div>
+            <div class="text-sm font-bold" [style.color]="hsZone.col">{{ hsZone.zone }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Trend</div>
+            <div class="text-sm font-bold" [class]="trendColor">{{ stockData.trend }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Strength</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.trendStr }}</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Volatility</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.vol }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Alpha vs SPY</div>
+            <div class="text-sm font-bold text-teal-600">{{ stockData.alpha }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Sentiment</div>
+            <div class="text-sm font-bold" [class]="sentimentColor">{{ stockData.sentiment }}</div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Panel 2: ReversalProbability -->
+    @if (activeTab === 1) {
+      <div class="p-4">
+        <!-- Signal bars -->
+        <div class="flex items-end gap-4 mb-4">
+          <!-- Bars -->
+          <div class="flex items-end gap-1 h-[50px]">
+            @for (h of barHeights; track $index; let i = $index) {
+              <div class="w-2 rounded-sm transition-all"
+                [style.height.%]="h"
+                [class]="(i + 1) <= rpActiveBars ? rpBarColor : 'bg-ink-200'">
+              </div>
+            }
+          </div>
+          <!-- Details -->
+          <div class="flex-1">
+            <div class="text-[10px] text-ink-500 font-semibold tracking-wide uppercase mb-1">ReversalProbability™</div>
+            <div class="flex items-baseline gap-1">
+              <span class="text-2xl font-bold text-ink-950">{{ stockData.rp }}</span>
+              <span class="text-sm text-ink-400">/100</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold mt-1"
+              [class]="rpInfo.band === 'Low' ? 'bg-green-50 text-green-700' : rpInfo.band === 'Medium' ? 'bg-amber-50 text-amber-700' : 'bg-red-50 text-red-700'">
+              <span class="w-2 h-2 rounded-full inline-block" [style.background]="rpDotColor"></span>
+              {{ rpInfo.band }} reversal risk
+            </div>
+            <div class="text-[10px] text-ink-400 mt-1">Likelihood of trend reversal in near term</div>
+          </div>
+        </div>
+
+        <!-- Context stats -->
+        <div class="text-[10px] text-ink-500 font-semibold uppercase tracking-wider mb-2">Context</div>
+        <div class="grid grid-cols-2 gap-2 mb-2">
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">5-Day Move</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.weekMov }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Swing Prob</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.swingProb }}</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Sector HS Zone</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.sectorHsZone }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Index HS Zone</div>
+            <div class="text-sm font-bold text-ink-950">{{ stockData.indexHsZone }}</div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Panel 3: Alpha & Sentiment -->
+    @if (activeTab === 2) {
+      <div class="p-4">
+        <div class="text-[10px] text-ink-500 font-semibold uppercase tracking-wider mb-3">Personal Alignment & Alpha</div>
+        <div class="grid grid-cols-3 gap-2 mb-4">
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Alpha</div>
+            <div class="text-base font-bold text-teal-600">{{ stockData.alpha2 }}</div>
+            <div class="text-[9px] text-ink-400">vs S&P 500</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Beta</div>
+            <div class="text-base font-bold text-ink-950">{{ stockData.beta }}</div>
+            <div class="text-[9px] text-ink-400">volatility factor</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Correlation</div>
+            <div class="text-base font-bold text-ink-950">{{ stockData.corr }}</div>
+            <div class="text-[9px] text-ink-400">to S&P 500</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 mb-4">
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">S&P 500 (6mo)</div>
+            <div class="text-sm font-bold text-teal-600">{{ stockData.spPerf }}</div>
+          </div>
+          <div class="flex flex-col items-center p-2.5 bg-ink-50 rounded-xl border border-ink-100">
+            <div class="text-[10px] text-ink-500 font-medium mb-0.5">Sentiment</div>
+            <div class="text-sm font-bold" [class]="sentimentColor">{{ stockData.sentiment }}</div>
+          </div>
+        </div>
+
+        <!-- Sentiment bar -->
+        <div class="p-3 bg-ink-50 rounded-xl border border-ink-100">
+          <div class="text-[10px] text-ink-500 font-medium mb-2">Market Sentiment Gauge</div>
+          <div class="h-2 rounded-full bg-gradient-to-r from-red-400 via-amber-400 to-green-400 relative">
+            <div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white border-2 border-ink-800 shadow-sm"
+              [style.left]="(stockData.sentiment === 'BULLISH' ? '80%' : stockData.sentiment === 'BEARISH' ? '20%' : '50%')">
+            </div>
+          </div>
+          <div class="flex justify-between mt-1 text-[9px] text-ink-400">
+            <span>Bearish</span>
+            <span>Neutral</span>
+            <span>Bullish</span>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

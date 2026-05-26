@@ -1,0 +1,7 @@
+<div class="p-3 px-3.5 rounded-md border-l-[3.5px] text-sm text-ink-800 leading-[1.75] mt-3"
+     [ngClass]="variantClasses">
+  @if (label) {
+    <div class="text-xs font-bold tracking-[0.08em] uppercase text-ink-800 mb-1">{{ label }}</div>
+  }
+  <ng-content></ng-content>
+</div>

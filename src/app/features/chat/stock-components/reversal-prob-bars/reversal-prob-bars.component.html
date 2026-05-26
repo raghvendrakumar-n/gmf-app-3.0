@@ -1,0 +1,12 @@
+<div class="py-3">
+  <div class="text-sm font-bold text-ink-950 mb-2.5">Reversal Probability</div>
+  @for (bar of bars; track $index) {
+    <div class="flex items-center gap-2.5 mb-2">
+      <span class="w-[60px] text-xs text-ink-500 text-right">{{ bar.label }}</span>
+      <div class="flex-1 h-2 bg-ink-200 rounded-full overflow-hidden">
+        <div class="h-full rounded-full transition-all duration-400" [style.width.%]="bar.pct" [style.background]="bar.color"></div>
+      </div>
+      <span class="w-9 font-mono text-xs text-ink-800">{{ bar.pct }}%</span>
+    </div>
+  }
+</div>

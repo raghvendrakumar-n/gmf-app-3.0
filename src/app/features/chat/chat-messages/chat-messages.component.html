@@ -1,0 +1,8 @@
+<div class="flex-1 overflow-y-auto py-7 flex flex-col gap-5 bg-ink-50 min-h-0 scroll-smooth [&>*]:w-full [&>*]:max-w-[760px] [&>*]:mx-auto [&>*]:px-8 [&>*]:box-border [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-ink-300 [&::-webkit-scrollbar-thumb]:rounded-sm" #scrollContainer>
+  @if ((messages$ | async)?.length === 0) {
+    <app-welcome-screen></app-welcome-screen>
+  }
+  @for (msg of messages$ | async; track $index) {
+    <app-message-bubble [message]="msg" (chipClicked)="onChipClicked($event)"></app-message-bubble>
+  }
+</div>

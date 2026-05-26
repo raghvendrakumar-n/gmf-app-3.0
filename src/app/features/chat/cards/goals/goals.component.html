@@ -1,0 +1,25 @@
+<div class="border-[1.5px] border-ink-200 rounded-2xl overflow-hidden bg-white shadow-sm animate-[card-in_0.22s_ease]">
+  <div class="flex items-center gap-2.5 px-4 py-3 border-b border-ink-200 bg-ink-50/50 relative">
+    <div class="absolute left-0 top-2 bottom-2 w-[3.5px] rounded-r-sm bg-gradient-to-b from-gold-400 to-teal-600"></div>
+    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-50 to-teal-100 border-[1.5px] border-teal-200 flex items-center justify-center text-sm shadow-[0_1px_4px_rgba(5,150,105,0.12)]">🎯</div>
+    <div class="flex-1">
+      <div class="font-serif text-[15px] font-semibold text-ink-950 tracking-tight">My Goals</div>
+    </div>
+  </div>
+
+  <div class="p-4 space-y-0">
+    @for (goal of goals; track goal.name) {
+      <div class="py-[11px] border-b border-ink-100 last:border-b-0 last:pb-0 first:pt-0.5">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-[12px] font-bold text-ink-950">{{ goal.icon }} {{ goal.name }}</span>
+          <span class="inline-flex items-center px-2.5 py-[3px] rounded-full text-[11px] font-bold tracking-[0.02em] whitespace-nowrap uppercase border"
+                [class]="goal.badgeClass">{{ goal.status }}</span>
+        </div>
+        <div class="h-[6px] rounded-full bg-ink-100 overflow-hidden mb-1.5">
+          <div class="h-full rounded-full transition-all" [style.width.%]="goal.progress" [style.background]="goal.barColor"></div>
+        </div>
+        <span class="text-[11px] text-ink-500 font-normal">{{ goal.current }} / {{ goal.target }} &nbsp;·&nbsp; {{ goal.date }}</span>
+      </div>
+    }
+  </div>
+</div>

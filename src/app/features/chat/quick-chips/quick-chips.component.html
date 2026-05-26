@@ -1,0 +1,11 @@
+@if (chips && chips.length) {
+  <div class="flex flex-wrap gap-2 mt-2.5">
+    @for (chip of chips; track $index) {
+      <button
+        (click)="chipClicked.emit(chip)"
+        class="px-4 py-2 rounded-full border-[1.5px] border-ink-200 bg-white font-sans text-sm font-medium text-ink-800 cursor-pointer whitespace-nowrap transition-all duration-150 hover:border-teal-300 hover:text-teal-700 hover:bg-teal-50 hover:-translate-y-px hover:shadow-sm">
+        {{ chip }}
+      </button>
+    }
+  </div>
+}

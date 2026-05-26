@@ -1,0 +1,42 @@
+<div class="fixed top-0 left-0 bottom-0 w-[300px] bg-white z-[101] flex flex-col transition-transform duration-[280ms] ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[4px_0_32px_rgba(0,0,0,0.14)]"
+     [ngClass]="(isOpen$ | async) ? 'translate-x-0' : '-translate-x-full'">
+  
+  <!-- Header -->
+  <div class="flex items-center justify-between px-4 h-[58px] border-b-[1.5px] border-ink-200 shrink-0 bg-white">
+    <span class="text-[12px] font-bold text-ink-950 tracking-[-0.01em]">Quick Access</span>
+    <div class="w-8 h-8 rounded-lg border-[1.5px] border-ink-200 bg-white flex items-center justify-center cursor-pointer text-ink-500 text-[18px] leading-none transition-all duration-[120ms] hover:border-ink-300 hover:text-ink-800 hover:bg-ink-50"
+         (click)="close()">×</div>
+  </div>
+
+  <!-- Body with thin scrollbar -->
+  <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 [scrollbar-width:thin] [scrollbar-color:var(--color-ink-300)_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-ink-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+    @for (section of sections; track section.label) {
+      <div class="bg-white border-[1.5px] border-ink-200 rounded-[14px] overflow-hidden shadow-sm shrink-0"
+           [class.border-teal-100]="section.isAgent">
+        <div class="px-[14px] py-[7px] text-[11px] font-bold uppercase tracking-[0.08em] text-teal-800 border-b border-teal-100 bg-teal-50"
+             [style]="section.isAgent ? 'background:linear-gradient(135deg,var(--color-teal-50),#f0fdf8);color:var(--color-teal-800)' : ''">
+          {{ section.label }}
+        </div>
+        @for (item of section.items; track item.title) {
+          <div class="flex items-center gap-[10px] px-[13px] py-[10px] cursor-pointer border-b border-ink-200 last:border-b-0 transition-[background] duration-[120ms] hover:bg-teal-50 active:bg-teal-100 group"
+               (click)="sendQuery(item.query)">
+            <div class="w-8 h-8 rounded-[9px] flex items-center justify-center text-[14px] shrink-0 shadow-[0_1px_3px_rgba(0,0,0,0.08)]"
+                 [style]="item.iconStyle">
+              @if (item.iconTextClass) {
+                <span [class]="item.iconTextClass">{{ item.icon }}</span>
+              } @else {
+                {{ item.icon }}
+              }
+            </div>
+            <div class="flex-1">
+              <div class="text-[14px] font-semibold text-ink-950 leading-none mb-[3px] tracking-[-0.01em]">{{ item.title }}</div>
+              <div class="text-[11px] text-ink-500 font-normal">{{ item.sub }}</div>
+            </div>
+            <span class="text-ink-500 text-[16px] opacity-0 transition-all duration-[120ms] group-hover:opacity-100 group-hover:translate-x-[2px]"
+                  [class]="item.arrowClass">›</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

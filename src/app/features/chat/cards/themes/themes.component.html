@@ -1,0 +1,25 @@
+<div class="border-[1.5px] border-ink-200 rounded-2xl overflow-hidden bg-white shadow-sm animate-[card-in_0.22s_ease]">
+  <div class="flex items-center gap-2.5 px-4 py-3 border-b border-ink-200 bg-ink-50/50 relative">
+    <div class="absolute left-0 top-2 bottom-2 w-[3.5px] rounded-r-sm bg-gradient-to-b from-gold-400 to-teal-600"></div>
+    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-50 to-teal-100 border-[1.5px] border-teal-200 flex items-center justify-center text-sm shadow-[0_1px_4px_rgba(5,150,105,0.12)]">🌐</div>
+    <div class="flex-1">
+      <div class="font-serif text-[15px] font-semibold text-ink-950 tracking-tight">{{ title }}</div>
+    </div>
+    <span class="text-[10px] text-ink-400 font-medium bg-ink-50 border border-ink-200 rounded-full px-2.5 py-0.5 uppercase tracking-widest">{{ totalCount }} available</span>
+  </div>
+
+  <div class="p-4">
+    @for (theme of visibleThemes; track theme.name) {
+      <div class="flex items-center justify-between py-[11px] border-b border-ink-100 last:border-b-0 last:pb-0 first:pt-0.5 gap-3">
+        <div class="flex flex-col gap-[3px]">
+          <div class="font-mono text-[13px] font-semibold text-ink-950 tracking-[0.02em]">{{ theme.name }}</div>
+          <div class="text-[11px] text-ink-500 font-normal">{{ theme.count }} stocks</div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="inline-flex items-center px-2.5 py-[3px] rounded-full text-[11px] font-bold tracking-[0.02em] whitespace-nowrap uppercase border"
+                [class]="theme.following ? 'bg-teal-50 text-teal-800 border-teal-200' : 'bg-ink-100 text-ink-700 border-ink-200'">{{ theme.following ? 'Following' : 'Not following' }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<app-drawer-overlay></app-drawer-overlay>
+<app-drawer-panel></app-drawer-panel>
+<app-login-modal [isOpen]="showLogin || (loginModalService.show$ | async) === true" (closed)="showLogin = false; loginModalService.close()" (loginSuccess)="showLogin = false; loginModalService.close()"></app-login-modal>
+<app-assessment-overlay></app-assessment-overlay>
+<div class="layout">
+  <app-chat-panel (signInClicked)="showLogin = true"></app-chat-panel>
+</div>

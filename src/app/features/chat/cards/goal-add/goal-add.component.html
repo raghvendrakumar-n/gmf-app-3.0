@@ -1,0 +1,44 @@
+<div class="border-[1.5px] border-ink-200 rounded-2xl overflow-hidden bg-white shadow-sm animate-[card-in_0.22s_ease]">
+  <div class="flex items-center gap-2.5 px-4 py-3 border-b border-ink-200 bg-ink-50/50 relative">
+    <div class="absolute left-0 top-2 bottom-2 w-[3.5px] rounded-r-sm bg-gradient-to-b from-gold-400 to-teal-600"></div>
+    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-50 to-teal-100 border-[1.5px] border-teal-200 flex items-center justify-center text-[15px] font-bold text-teal-700 shadow-[0_1px_4px_rgba(5,150,105,0.12)]">+</div>
+    <div class="flex-1">
+      <div class="font-serif text-[15px] font-semibold text-ink-950 tracking-tight">New Goal</div>
+    </div>
+  </div>
+
+  <div class="p-4 space-y-3">
+    <div class="form-field">
+      <label class="block text-[11px] font-semibold tracking-[0.03em] uppercase text-ink-600 mb-1.5">Goal name</label>
+      <input type="text" [(ngModel)]="goalName" placeholder="e.g. Dream vacation"
+             class="w-full border-[1.5px] border-ink-200 rounded-[9px] px-3.5 py-2.5 text-sm text-ink-950 bg-white outline-none transition-all focus:border-teal-400 focus:shadow-[0_0_0_3px_rgba(18,122,82,0.12)] placeholder:text-ink-400 font-normal"/>
+    </div>
+
+    <div class="form-field">
+      <label class="block text-[11px] font-semibold tracking-[0.03em] uppercase text-ink-600 mb-1.5">Target amount ($)</label>
+      <input type="number" [(ngModel)]="targetAmount" placeholder="25000"
+             class="w-full border-[1.5px] border-ink-200 rounded-[9px] px-3.5 py-2.5 text-sm text-ink-950 bg-white outline-none transition-all focus:border-teal-400 focus:shadow-[0_0_0_3px_rgba(18,122,82,0.12)] placeholder:text-ink-400 font-normal"/>
+    </div>
+
+    <div class="form-field">
+      <label class="block text-[11px] font-semibold tracking-[0.03em] uppercase text-ink-600 mb-1.5">Target date</label>
+      <input type="month" [(ngModel)]="targetDate"
+             class="w-full border-[1.5px] border-ink-200 rounded-[9px] px-3.5 py-2.5 text-sm text-ink-950 bg-white outline-none transition-all focus:border-teal-400 focus:shadow-[0_0_0_3px_rgba(18,122,82,0.12)] font-normal"/>
+    </div>
+
+    <div class="form-field">
+      <label class="block text-[11px] font-semibold tracking-[0.03em] uppercase text-ink-600 mb-1.5">Priority</label>
+      <select [(ngModel)]="priority"
+              class="w-full border-[1.5px] border-ink-200 rounded-[9px] px-3.5 py-2.5 text-sm text-ink-950 bg-white outline-none transition-all focus:border-teal-400 focus:shadow-[0_0_0_3px_rgba(18,122,82,0.12)] font-normal">
+        <option>High</option>
+        <option>Medium</option>
+        <option>Low</option>
+      </select>
+    </div>
+
+    <button (click)="onSave()"
+            class="w-full py-[11px] bg-gradient-to-br from-teal-500 to-teal-700 text-white/95 rounded-[10px] text-sm font-bold cursor-pointer tracking-normal transition-all shadow-teal hover:-translate-y-0.5 hover:shadow-[0_8px_22px_rgba(5,150,105,0.36)] active:scale-[0.98]">
+      Save goal →
+    </button>
+  </div>
+</div>

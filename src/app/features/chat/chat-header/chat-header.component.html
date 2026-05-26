@@ -1,0 +1,40 @@
+<div class="grid grid-cols-[auto_1fr_auto] items-center h-[60px] px-5 bg-white border-b border-ink-200 shrink-0 overflow-hidden shadow-sm">
+  <div class="flex items-center gap-2.5 shrink-0">
+    <div class="w-9 h-9 rounded-md border border-ink-200 bg-white flex items-center justify-center flex-col gap-1 cursor-pointer shadow-sm hover:border-teal-600 hover:bg-teal-50 transition-all" (click)="openDrawer()" title="Quick access">
+      <span class="block w-3.5 h-[1.5px] bg-ink-500 rounded-sm"></span>
+      <span class="block w-3.5 h-[1.5px] bg-ink-500 rounded-sm"></span>
+      <span class="block w-3.5 h-[1.5px] bg-ink-500 rounded-sm"></span>
+    </div>
+    <div class="w-[30px] h-[30px] bg-gradient-to-br from-teal-600 to-teal-800 rounded-[9px] flex items-center justify-center shadow-teal shrink-0">
+      <svg class="w-[15px] h-[15px] stroke-white fill-none" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+    </div>
+    <span class="font-sans text-lg font-extrabold text-ink-900 tracking-tight whitespace-nowrap">StockIQ</span>
+    <span class="w-px h-[22px] bg-ink-200 mx-1.5 inline-block shrink-0"></span>
+  </div>
+
+  <div class="flex items-center justify-center gap-2.5 min-w-0 overflow-hidden">
+    <div class="relative w-9 h-9 rounded-md bg-gradient-to-br from-teal-600 to-teal-700 flex items-center justify-center shrink-0 shadow-[0_2px_6px_rgba(26,127,90,0.28)]">
+      <span class="font-serif text-[17px] text-white leading-none">L</span>
+      <div class="absolute -bottom-0.5 -right-0.5 w-[11px] h-[11px] rounded-full bg-green-500 border-2 border-white"></div>
+    </div>
+    <div class="flex flex-col gap-[3px] min-w-0 overflow-hidden">
+      <div class="font-serif italic text-xl font-semibold text-ink-900 leading-none">Leo</div>
+      <div class="flex items-center gap-1.5 text-xs text-ink-500 font-medium whitespace-nowrap">
+        <span class="inline-flex items-center bg-gold-500 text-ink-950 rounded px-[7px] py-[2px] text-[9px] font-extrabold tracking-widest uppercase">AI Analyst</span>
+        <span class="text-ink-300">·</span>
+        <span>Guide My Folio</span>
+        <span class="text-ink-300">·</span>
+        <span class="text-green-500 font-semibold">● Online</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-3 justify-end shrink-0">
+    <span class="text-xs text-ink-500 font-medium whitespace-nowrap tracking-widest uppercase">{{ today }}</span>
+    <div class="flex items-center gap-[7px] py-[5px] pl-1.5 pr-3 rounded-full border border-ink-200 bg-white cursor-pointer text-sm font-semibold text-ink-600 shadow-sm whitespace-nowrap transition-all hover:border-teal-400 hover:text-teal-800" (click)="handleUserChip()">
+      <div class="w-6 h-6 rounded-full bg-gradient-to-br from-teal-100 to-teal-200 border border-teal-200 text-teal-800 text-[9px] font-extrabold flex items-center justify-center">{{ (currentUser$ | async)?.initials || '?' }}</div>
+      <span>{{ (currentUser$ | async)?.name || 'Sign in' }}</span>
+    </div>
+    <div class="text-xs text-ink-500 cursor-pointer px-3 py-1.5 rounded-lg border border-ink-200 font-medium bg-white transition-all hover:border-ink-300 hover:text-ink-700 hover:bg-ink-50" (click)="clearChat()">Clear</div>
+  </div>
+</div>

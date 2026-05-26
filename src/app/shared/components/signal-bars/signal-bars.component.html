@@ -1,0 +1,7 @@
+<div class="flex gap-[3px]">
+  @for (bar of bars; track $index; let i = $index) {
+    <div class="w-3 h-3.5 rounded-sm transition-colors duration-250"
+         [ngClass]="i < filled ? activeColor : 'bg-ink-200'">
+    </div>
+  }
+</div>

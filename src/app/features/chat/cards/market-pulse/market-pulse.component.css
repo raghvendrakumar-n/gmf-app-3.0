@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 7px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .stat-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

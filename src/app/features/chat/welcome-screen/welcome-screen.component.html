@@ -1,0 +1,16 @@
+<div class="text-center pt-8 px-4 pb-4">
+  <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-600 to-teal-700 flex items-center justify-center mx-auto mb-3.5 shadow-[0_4px_16px_rgba(26,127,90,0.25)]">
+    <span class="font-serif text-[28px] text-white leading-none">L</span>
+  </div>
+  <div class="font-serif italic text-4xl font-semibold text-ink-900 mb-2.5 tracking-tight">{{ greeting }}</div>
+  <div class="text-base text-ink-600 leading-relaxed max-w-[380px] mx-auto mb-5">
+    I'm <strong>Leo</strong>, your AI analyst for Guide My Folio. Ask me a question below.
+  </div>
+  <div class="flex flex-wrap gap-2 justify-center max-w-[460px] mx-auto">
+    <div class="px-4 py-[7px] rounded-[22px] border border-ink-200 bg-white text-xs font-medium text-ink-600 cursor-pointer shadow-sm transition-all hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50" (click)="sendQuery('How is the market doing?')">📊 Market overview</div>
+    <div class="px-4 py-[7px] rounded-[22px] border border-ink-200 bg-white text-xs font-medium text-ink-600 cursor-pointer shadow-sm transition-all hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50" (click)="sendQuery('How is Apple doing?')"> Apple analysis</div>
+    <div class="px-4 py-[7px] rounded-[22px] border border-ink-200 bg-white text-xs font-medium text-ink-600 cursor-pointer shadow-sm transition-all hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50" (click)="sendQuery('Show matching opportunities')">🎯 Find opportunities</div>
+    <div class="px-4 py-[7px] rounded-[22px] border border-ink-200 bg-white text-xs font-medium text-ink-600 cursor-pointer shadow-sm transition-all hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50" (click)="sendQuery('What is my risk profile?')">🛡 My risk profile</div>
+    <div class="px-4 py-[7px] rounded-[22px] border border-ink-200 bg-white text-xs font-medium text-ink-600 cursor-pointer shadow-sm transition-all hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50" (click)="sendQuery('Show my portfolio')">💼 My portfolio</div>
+  </div>
+</div>
